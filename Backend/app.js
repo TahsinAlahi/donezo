@@ -13,4 +13,21 @@ app.get("/", (req, res) => {
   res.send("Hello from Donezo!!");
 });
 
+app.use("*", (req, res, next) => {
+  next(createHttpErrors(404, "Route not found"));
+});
+
+app.use((err, req, res, next) => {
+  let errorCode = 500;
+  let errorMessage = "Something went wrong";
+
+  if (createHttpErrors.isHttpError(err)) {
+    errorCode = err.status;
+    errorMessage = err.message;
+  }
+
+  console.error(errorCode, errorMessage);
+  res.status(errorCode).send({ message: errorMessage });
+});
+
 module.exports = app;
