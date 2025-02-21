@@ -163,7 +163,7 @@ function AuthProvider({ children }) {
   async function logout() {
     try {
       await signOut(auth);
-      await axiosPublic.post("/users/logout");
+      await axiosPublic.post("users/logout");
       setUser(null);
       toast.success("User logged out successfully");
       return { status: "success", message: "User logged out successfully" };
@@ -190,13 +190,13 @@ function AuthProvider({ children }) {
       try {
         if (currUser) {
           setUser(currUser);
-          await axiosPublic.post("/users/login", {
+          await axiosPublic.post("users/login", {
             email: currUser.email,
             displayName: currUser.displayName,
           });
         } else {
           setUser(null);
-          await axiosPublic.post("/users/logout");
+          // await axiosPublic.post("users/logout");
         }
       } catch (error) {
         console.error("Error handling authentication state:", error);
