@@ -29,6 +29,7 @@ app.use((err, req, res, next) => {
   }
 
   console.error(errorCode, errorMessage);
+  console.error(err);
   res.status(errorCode).send({ message: errorMessage });
 });
 
