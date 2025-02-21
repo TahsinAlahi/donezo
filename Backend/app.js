@@ -14,6 +14,7 @@ app.get("/", (req, res) => {
 });
 
 app.use("/tasks", require("./routes/tasks.route"));
+app.use("/users", require("./routes/users.route"));
 
 app.use("*", (req, res, next) => {
   next(createHttpErrors(404, "Route not found"));
