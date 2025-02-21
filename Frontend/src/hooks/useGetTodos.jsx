@@ -5,11 +5,12 @@ import useAxiosSecure from "../hooks/useAxiosSecure";
 function useGetTodos() {
   const [todos, setTodos] = useState([]);
   const [isTodoLoading, setIsTodoLoading] = useState(true);
+  const axiosSecure = useAxiosSecure();
 
   useEffect(() => {
     async function getTodos() {
       try {
-        const response = await useAxiosSecure("/tasks");
+        const response = await axiosSecure("/tasks");
         if (response.status === 200) {
           setTodos(response.data);
         }

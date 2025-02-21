@@ -18,7 +18,7 @@ function LoginPage() {
 
   async function handleLogin(data) {
     const res = await loginWithEmail(data.email, data.password);
-    if (res.status === "success") navigate(state?.from || "/");
+    if (res.status === "success") navigate(state?.from || "/todo");
   }
 
   return (

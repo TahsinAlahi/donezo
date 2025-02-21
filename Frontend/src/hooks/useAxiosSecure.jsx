@@ -10,8 +10,7 @@ function useAxiosSecure() {
   const axiosSecure = axios.create({
     baseURL: `${import.meta.env.VITE_API_URL}/`,
     withCredentials: true,
-    // params: { email: user?.email },
-    params: { email: "alahitahsin@gmail.com" },
+    params: { email: user?.email },
   });
 
   useEffect(() => {

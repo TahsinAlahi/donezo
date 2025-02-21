@@ -3,6 +3,7 @@ import AppLayout from "./AppLayout";
 import HomePage from "./pages/HomePage/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
+import TodoPage from "./pages/TodoPage/TodoPage";
 
 const router = createBrowserRouter([
   {
@@ -12,6 +13,10 @@ const router = createBrowserRouter([
       {
         path: "/",
         element: <HomePage />,
+      },
+      {
+        path: "/todo",
+        element: <TodoPage />,
       },
       {
         path: "/register",

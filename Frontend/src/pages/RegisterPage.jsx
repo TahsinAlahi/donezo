@@ -30,7 +30,7 @@ function RegisterPage() {
       data.password
     );
 
-    if (res.status === "success") navigate(state?.from || "/");
+    if (res.status === "success") navigate(state?.from || "/todo");
   }
 
   return (
