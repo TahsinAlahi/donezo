@@ -1,9 +1,9 @@
 const router = require("express").Router();
 const createHttpErrors = require("http-errors");
-const { tasksCollection } = require("./database");
+const { tasksCollection } = require("../database");
 const { ObjectId } = require("mongodb");
 
-// get the tasks of the user
+// get the tasks of a user
 router.get("/", async (req, res, next) => {
   try {
     const { email } = req.query;
@@ -16,7 +16,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-// post the user tasks
+// post a user tasks
 router.post("/", async (req, res, next) => {
   try {
     const { title, description, category, dueDate } = req.body;
@@ -40,7 +40,27 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-// delete the task
+// update a task
+router.put("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) throw createHttpErrors(400, "Invalid Id.");
+
+    const updatedTask = await tasksCollection.findOneAndUpdate(
+      { _id: ObjectId.createFromHexString(id) },
+      { $set: req.body },
+      { returnDocument: "after" }
+    );
+
+    if (!updatedTask) throw createHttpErrors(404, "Task not found.");
+
+    res.status(200).send(updatedTask);
+  } catch (error) {
+    next(createHttpErrors(error));
+  }
+});
+
+// delete a task
 router.delete("/:id", async (req, res, next) => {
   try {
     const { id } = req.params;

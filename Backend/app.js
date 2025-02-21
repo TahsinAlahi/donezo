@@ -13,7 +13,7 @@ app.get("/", (req, res) => {
   res.send("Hello from Donezo!!");
 });
 
-app.use("/tasks", require("./tasks.route"));
+app.use("/tasks", require("./routes/tasks.route"));
 
 app.use("*", (req, res, next) => {
   next(createHttpErrors(404, "Route not found"));
