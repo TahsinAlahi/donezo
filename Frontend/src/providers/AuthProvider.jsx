@@ -21,7 +21,7 @@ function AuthProvider({ children }) {
   const [isAuthLoading, setIsAuthLoading] = useState(true);
   const axiosPublic = useAxiosPublic();
 
-  async function registerWithEmail(username, email, password, imageUrl) {
+  async function registerWithEmail(username, email, password) {
     try {
       const userCredential = await createUserWithEmailAndPassword(
         auth,
@@ -31,8 +31,8 @@ function AuthProvider({ children }) {
       const userData = userCredential.user;
 
       await updateProfile(userData, {
+        email: email,
         displayName: username,
-        photoURL: imageUrl,
       });
 
       toast.success("User created successfully");
@@ -163,7 +163,7 @@ function AuthProvider({ children }) {
   async function logout() {
     try {
       await signOut(auth);
-      await axiosPublic.post("/jwt/logout");
+      await axiosPublic.post("/users/logout");
       setUser(null);
       toast.success("User logged out successfully");
       return { status: "success", message: "User logged out successfully" };
@@ -190,14 +190,13 @@ function AuthProvider({ children }) {
       try {
         if (currUser) {
           setUser(currUser);
-          await axiosPublic.post("/jwt/login", {
+          await axiosPublic.post("/users/login", {
             email: currUser.email,
-            name: currUser.displayName,
-            imageUrl: currUser.photoURL,
+            displayName: currUser.displayName,
           });
         } else {
           setUser(null);
-          await axiosPublic.post("/jwt/logout");
+          await axiosPublic.post("/users/logout");
         }
       } catch (error) {
         console.error("Error handling authentication state:", error);
