@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const createHttpErrors = require("http-errors");
 const { tasksCollection } = require("./database");
-const { Timestamp } = require("mongodb");
+const { ObjectId } = require("mongodb");
 
 // get the tasks of the user
 router.get("/", async (req, res, next) => {
@@ -35,6 +35,24 @@ router.post("/", async (req, res, next) => {
 
     const { insertedId } = await tasksCollection.insertOne(postTask);
     res.status(201).send({ _id: insertedId, ...postTask });
+  } catch (error) {
+    next(createHttpErrors(error));
+  }
+});
+
+// delete the task
+router.delete("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) throw createHttpErrors(400, "Invalid Id.");
+
+    const deletedTask = await tasksCollection.findOneAndDelete({
+      _id: ObjectId.createFromHexString(id),
+    });
+
+    if (deletedTask === null) throw createHttpErrors(404, "Task not found.");
+
+    res.status(200).send({ message: "Task deleted successfully." });
   } catch (error) {
     next(createHttpErrors(error));
   }
