@@ -1,16 +1,17 @@
 import axios from "axios";
 import { useAuth } from "../providers/AuthProvider";
 import { useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router";
 
 function useAxiosSecure() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
   const axiosSecure = axios.create({
-    baseURL: `${import.meta.env.VITE_API_URL}/api`,
+    baseURL: `${import.meta.env.VITE_API_URL}/`,
     withCredentials: true,
-    params: { email: user?.email },
+    // params: { email: user?.email },
+    params: { email: "alahitahsin@gmail.com" },
   });
 
   useEffect(() => {
