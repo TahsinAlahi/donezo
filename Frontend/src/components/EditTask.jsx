@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import useAuth from "../hooks/useAuth";
+import { useAuth } from "../providers/AuthProvider";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -18,7 +18,7 @@ const EditTask = () => {
   useEffect(() => {
     const fetchTask = async () => {
       try {
-        const response = await axiosSecure.get(`/tasks/${taskId}`);
+        const response = await axiosSecure.get(`tasks/${taskId}`);
         if (response.data) {
           setTitle(response.data.title);
           setDescription(response.data.description);
@@ -44,7 +44,7 @@ const EditTask = () => {
     };
 
     try {
-      const response = await axiosSecure.put(`/tasks/${taskId}`, updatedTask);
+      const response = await axiosSecure.put(`tasks/${taskId}`, updatedTask);
       if (response.status === 200) {
         alert("Task updated successfully!");
         navigate("/dashboard");

@@ -1,5 +1,6 @@
 import { useMutation, useQueryClient } from "react-query";
 import useAxiosSecure from "../hooks/useAxiosSecure";
+import { FaTrash } from "react-icons/fa";
 
 const DeleteTask = ({ taskId }) => {
   const axiosSecure = useAxiosSecure();
@@ -7,7 +8,7 @@ const DeleteTask = ({ taskId }) => {
 
   const deleteTaskMutation = useMutation({
     mutationFn: async () => {
-      await axiosSecure.delete(`/tasks/${taskId}`);
+      await axiosSecure.delete(`tasks/${taskId}`);
     },
     onSuccess: () => {
       alert("Task deleted successfully!");
@@ -18,9 +19,9 @@ const DeleteTask = ({ taskId }) => {
   return (
     <button
       onClick={() => deleteTaskMutation.mutate()}
-      className="btn btn-sm btn-error"
+      className="text-base cursor-pointer text-red-500"
     >
-      Delete
+      <FaTrash />
     </button>
   );
 };

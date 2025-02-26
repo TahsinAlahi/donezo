@@ -97,13 +97,11 @@ function TodoPage() {
       {/* Add Task Button */}
       <div
         className={`flex items-center justify-center absolute inset-0 bg-slate-200 ${
-          isAddTaskOpen ? "opacity-100" : "opacity-0 bg-red-500"
+          isAddTaskOpen ? "block" : "hidden bg-red-500"
         } transition-all duration-300`}
       >
         <div
-          className={`${
-            isAddTaskOpen ? "opacity-100" : "opacity-0 hidden"
-          } w-full`}
+          className={`${isAddTaskOpen ? "opacity-100" : "opacity-0"} w-full`}
         >
           <AddTask setIsAddTaskOpen={setIsAddTaskOpen} />
         </div>
@@ -143,9 +141,7 @@ function TodoPage() {
                             </Link>
 
                             {/* Delete Task */}
-                            <DeleteTask taskId={task._id}>
-                              <FaTrash className="text-red-500 cursor-pointer hover:text-red-700" />
-                            </DeleteTask>
+                            <DeleteTask taskId={task._id} />
                           </div>
                         </div>
                       )}
