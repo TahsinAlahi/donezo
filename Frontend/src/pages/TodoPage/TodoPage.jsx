@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
 import { Link } from "react-router-dom";
 import { FaPlus, FaEdit, FaTrash, FaMinus } from "react-icons/fa";
