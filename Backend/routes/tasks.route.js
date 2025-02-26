@@ -19,15 +19,15 @@ router.get("/", async (req, res, next) => {
 // post a user tasks
 router.post("/", async (req, res, next) => {
   try {
-    const { title, description, category, dueDate } = req.body;
+    const { title, description, dueDate } = req.body;
 
-    if (!title || !description || !category || !dueDate)
+    if (!title || !description || !dueDate)
       throw createHttpErrors(400, "All fields are required.");
 
     const postTask = {
       title,
       description,
-      category,
+      category: "To-Do",
       userEmail: req.query?.email,
       timestamp: new Date().toISOString(),
       dueDate: new Date(dueDate).toISOString(),

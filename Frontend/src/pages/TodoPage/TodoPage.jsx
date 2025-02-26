@@ -1,12 +1,17 @@
 import { useEffect, useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { DragDropContext, Droppable, Draggable } from "@hello-pangea/dnd";
+import { Link } from "react-router-dom";
+import { FaPlus, FaEdit, FaTrash, FaMinus } from "react-icons/fa";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
 import Loader from "../../components/Loader";
+import AddTask from "../../components/AddTask";
+import DeleteTask from "../../components/DeleteTask";
 
 function TodoPage() {
   const axiosSecure = useAxiosSecure();
   const queryClient = useQueryClient();
+  const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
 
   // Fetch tasks using React Query
   const { data: tasks = [], isLoading } = useQuery({
@@ -16,8 +21,6 @@ function TodoPage() {
       return response.data;
     },
   });
-
-  console.log(tasks);
 
   // State for task columns
   const [columns, setColumns] = useState({
@@ -79,7 +82,33 @@ function TodoPage() {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="max-w-screen-2xl mx-auto min-h-[calc(100svh-52px)] pt-9">
+    <div className="max-w-screen-2xl mx-auto min-h-[calc(100svh-52px)] pt-9 relative">
+      <div
+        className="absolute bottom-7 p-2 bg-red-500 rounded-full right-7 z-100"
+        onClick={() => setIsAddTaskOpen(!isAddTaskOpen)}
+      >
+        {isAddTaskOpen ? (
+          <FaMinus className="text-white" />
+        ) : (
+          <FaPlus className="text-white" />
+        )}
+      </div>
+
+      {/* Add Task Button */}
+      <div
+        className={`flex items-center justify-center absolute inset-0 bg-slate-200 ${
+          isAddTaskOpen ? "opacity-100" : "opacity-0 bg-red-500"
+        } transition-all duration-300`}
+      >
+        <div
+          className={`${
+            isAddTaskOpen ? "opacity-100" : "opacity-0 hidden"
+          } w-full`}
+        >
+          <AddTask setIsAddTaskOpen={setIsAddTaskOpen} />
+        </div>
+      </div>
+
       <DragDropContext onDragEnd={handleOnDragEnd}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {Object.entries(columns).map(([category, tasks]) => (
@@ -90,7 +119,9 @@ function TodoPage() {
                   {...provided.droppableProps}
                   className="border-2 border-black p-3 min-h-[300px]"
                 >
-                  <h2 className="text-xl font-bold mb-2">{category}</h2>
+                  <h2 className="text-xl font-bold mb-2 flex justify-between items-center">
+                    {category}
+                  </h2>
                   {tasks.map((task, index) => (
                     <Draggable
                       key={task._id}
@@ -102,9 +133,20 @@ function TodoPage() {
                           ref={provided.innerRef}
                           {...provided.draggableProps}
                           {...provided.dragHandleProps}
-                          className="border p-3 bg-white shadow-md rounded-md mb-2"
+                          className="border p-3 bg-white shadow-md rounded-md mb-2 flex justify-between items-center"
                         >
-                          {task.description}
+                          <div>{task.description}</div>
+                          <div className="flex gap-2">
+                            {/* Edit Task */}
+                            <Link to={`/edit/${task._id}`}>
+                              <FaEdit className="text-blue-500 cursor-pointer hover:text-blue-700" />
+                            </Link>
+
+                            {/* Delete Task */}
+                            <DeleteTask taskId={task._id}>
+                              <FaTrash className="text-red-500 cursor-pointer hover:text-red-700" />
+                            </DeleteTask>
+                          </div>
                         </div>
                       )}
                     </Draggable>
