@@ -3,7 +3,7 @@ import { useAuth } from "../providers/AuthProvider";
 import useAxiosSecure from "../hooks/useAxiosSecure";
 import { useNavigate } from "react-router-dom";
 
-const AddTask = ({ setIsAddTaskOpen }) => {
+const AddTask = ({ setIsAddTaskOpen, refetch }) => {
   const { user } = useAuth();
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
@@ -31,6 +31,7 @@ const AddTask = ({ setIsAddTaskOpen }) => {
     setDescription("");
     setDueDate("");
     setIsAddTaskOpen(false);
+    refetch();
   };
 
   return (

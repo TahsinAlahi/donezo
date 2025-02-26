@@ -14,7 +14,11 @@ function TodoPage() {
   const [isAddTaskOpen, setIsAddTaskOpen] = useState(false);
 
   // Fetch tasks using React Query
-  const { data: tasks = [], isLoading } = useQuery({
+  const {
+    data: tasks = [],
+    isLoading,
+    refetch,
+  } = useQuery({
     queryKey: ["tasks"],
     queryFn: async () => {
       const response = await axiosSecure.get("tasks");
@@ -103,7 +107,7 @@ function TodoPage() {
         <div
           className={`${isAddTaskOpen ? "opacity-100" : "opacity-0"} w-full`}
         >
-          <AddTask setIsAddTaskOpen={setIsAddTaskOpen} />
+          <AddTask setIsAddTaskOpen={setIsAddTaskOpen} refetch={refetch} />
         </div>
       </div>
 
@@ -133,7 +137,7 @@ function TodoPage() {
                           {...provided.dragHandleProps}
                           className="border p-3 bg-white shadow-md rounded-md mb-2 flex justify-between items-center"
                         >
-                          <div>{task.description}</div>
+                          <div>{task.title}</div>
                           <div className="flex gap-2">
                             {/* Edit Task */}
                             <Link to={`/edit/${task._id}`}>

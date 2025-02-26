@@ -28,7 +28,7 @@ const EditTask = () => {
     };
 
     fetchTask();
-  }, [taskId, axiosSecure]);
+  }, [taskId]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -65,7 +65,7 @@ const EditTask = () => {
           <input
             type="text"
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => setTitle(() => e.target.value)}
             maxLength="20"
             required
             className="w-full border-base-300 rounded mt-1 p-1 border-2"
