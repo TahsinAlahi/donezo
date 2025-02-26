@@ -9,11 +9,11 @@ router.post("/login", async (req, res, next) => {
     const { email, displayName } = req.body;
     if (!email) throw createHttpErrors(400, "Email is required");
 
-    await usersCollection.findOneAndUpdate(
-      { email },
-      { $set: { email, displayName } },
-      { upsert: true }
-    );
+    const existingUser = await usersCollection.findOne({ email });
+
+    if (!existingUser) {
+      await usersCollection.insertOne({ email, displayName });
+    }
 
     const token = jwt.sign({ email }, process.env.JWT_SECRET, {
       expiresIn: "3h",

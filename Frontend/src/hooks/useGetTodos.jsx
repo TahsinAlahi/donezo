@@ -6,25 +6,36 @@ function useGetTodos() {
   const [todos, setTodos] = useState([]);
   const [isTodoLoading, setIsTodoLoading] = useState(true);
   const axiosSecure = useAxiosSecure();
+  const [ordered, setOrdered] = useState();
+
+  async function getTodos() {
+    try {
+      const response = await axiosSecure("/tasks");
+      if (response.status === 200) {
+        const sortedTodos = response.data.sort(
+          (a, b) => new Date(a.timestamp) - new Date(b.timestamp)
+        );
+        setTodos(sortedTodos);
+      }
+    } catch (error) {
+      toast(error.message);
+    } finally {
+      setIsTodoLoading(false);
+    }
+  }
 
   useEffect(() => {
-    async function getTodos() {
-      try {
-        const response = await axiosSecure("/tasks");
-        if (response.status === 200) {
-          setTodos(response.data);
-        }
-      } catch (error) {
-        toast(error.message);
-      } finally {
-        setIsTodoLoading(false);
-      }
-    }
-
     getTodos();
-  }, []);
+  }, [axiosSecure]);
 
-  return [todos, isTodoLoading];
+  return {
+    todos,
+    setTodos,
+    isTodoLoading,
+    ordered,
+    setOrdered,
+    refetchTodos: getTodos,
+  };
 }
 
 export default useGetTodos;

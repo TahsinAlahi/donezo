@@ -12,7 +12,7 @@ router.get("/", async (req, res, next) => {
 
     res.status(200).send(tasks);
   } catch (error) {
-    next(createHttpErrors(error));
+    next(error);
   }
 });
 
@@ -36,7 +36,7 @@ router.post("/", async (req, res, next) => {
     const { insertedId } = await tasksCollection.insertOne(postTask);
     res.status(201).send({ _id: insertedId, ...postTask });
   } catch (error) {
-    next(createHttpErrors(error));
+    next(error);
   }
 });
 
@@ -56,7 +56,7 @@ router.put("/:id", async (req, res, next) => {
 
     res.status(200).send(updatedTask);
   } catch (error) {
-    next(createHttpErrors(error));
+    next(error);
   }
 });
 
@@ -74,7 +74,7 @@ router.delete("/:id", async (req, res, next) => {
 
     res.status(200).send({ message: "Task deleted successfully." });
   } catch (error) {
-    next(createHttpErrors(error));
+    next(error);
   }
 });
 
