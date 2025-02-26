@@ -65,10 +65,13 @@ const EditTask = () => {
           <input
             type="text"
             value={title}
-            onChange={(e) => setTitle(() => e.target.value)}
-            maxLength="20"
+            onChange={(e) => {
+              setTitle(e.target.value);
+              console.log(title);
+            }}
             required
             className="w-full border-base-300 rounded mt-1 p-1 border-2"
+            maxLength="50"
           />
         </div>
 
@@ -76,7 +79,9 @@ const EditTask = () => {
           <label className="block font-semibold">Task Description</label>
           <textarea
             value={description}
-            onChange={(e) => setDescription(e.target.value)}
+            onChange={(e) => {
+              setDescription(e.target.value);
+            }}
             maxLength="100"
             className="w-full border-base-300 rounded mt-1 border-2 p-1"
           />

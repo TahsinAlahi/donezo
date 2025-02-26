@@ -86,9 +86,9 @@ function TodoPage() {
   if (isLoading) return <Loader />;
 
   return (
-    <div className="max-w-screen-2xl mx-auto min-h-[calc(100svh-52px)] pt-9 relative">
+    <div className="max-w-screen-2xl px-4 mx-auto min-h-[calc(100svh-52px)] pt-9 relative">
       <div
-        className="absolute bottom-7 p-2 bg-red-500 rounded-full right-7 z-100"
+        className="fixed bottom-7 right-7 p-2 bg-red-500 rounded-full z-100"
         onClick={() => setIsAddTaskOpen(!isAddTaskOpen)}
       >
         {isAddTaskOpen ? (

@@ -35,7 +35,7 @@ const AddTask = ({ setIsAddTaskOpen, refetch }) => {
   };
 
   return (
-    <div className="w-1/2 my-4 mx-auto bg-white p-3">
+    <div className="w-full md:w-1/2 my-4 mx-auto bg-white p-3">
       <h2 className="text-2xl font-bold text-center mb-4">Create a Task</h2>
       <form onSubmit={handleSubmit} className="space-y-4">
         <div>
@@ -44,7 +44,7 @@ const AddTask = ({ setIsAddTaskOpen, refetch }) => {
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
-            maxLength="20"
+            maxLength="50"
             required
             className="w-full border-base-300 border-2 p-1 rounded mt-1"
           />
@@ -57,6 +57,7 @@ const AddTask = ({ setIsAddTaskOpen, refetch }) => {
             value={dueDate}
             onChange={(e) => setDueDate(e.target.value)}
             required
+            maxLength="200"
             className="w-full border-base-300 border-2 p-1 rounded mt-1"
           />
         </div>
