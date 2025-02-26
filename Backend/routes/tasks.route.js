@@ -60,6 +60,23 @@ router.put("/:id", async (req, res, next) => {
   }
 });
 
+router.get("/:id", async (req, res, next) => {
+  try {
+    const { id } = req.params;
+    if (!ObjectId.isValid(id)) throw createHttpErrors(400, "Invalid Id.");
+
+    const task = await tasksCollection.findOne({
+      _id: ObjectId.createFromHexString(id),
+    });
+
+    if (!task) throw createHttpErrors(404, "Task not found.");
+
+    res.status(200).send(task);
+  } catch (error) {
+    next(error);
+  }
+});
+
 // delete a task
 router.delete("/:id", async (req, res, next) => {
   try {

@@ -4,6 +4,7 @@ import HomePage from "./pages/HomePage/HomePage";
 import RegisterPage from "./pages/RegisterPage";
 import LoginPage from "./pages/LoginPage";
 import TodoPage from "./pages/TodoPage/TodoPage";
+import EditTask from "./components/EditTask";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "/todo",
         element: <TodoPage />,
+      },
+      {
+        path: "/edit/:taskId",
+        element: <EditTask />,
       },
       {
         path: "/register",

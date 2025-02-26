@@ -21,8 +21,6 @@ const AddTask = ({ setIsAddTaskOpen }) => {
       dueDate,
     };
 
-    console.log("clicked");
-
     const response = await axiosSecure.post("/tasks", newTask);
     if (response.data.insertedId) {
       alert("Task added successfully!");
